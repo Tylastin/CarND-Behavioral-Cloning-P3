@@ -7,8 +7,8 @@ import sklearn
 from sklearn.model_selection import train_test_split
 import numpy as np
 from math import ceil
-
 from sklearn.utils import shuffle
+import cv2
 # Read csv data
 lines = []
 with open('/opt/carnd_p3/data/driving_log.csv') as csv_file:
@@ -21,8 +21,8 @@ with open('/opt/carnd_p3/data/driving_log.csv') as csv_file:
 
 # #  Splitting Data
 data_lines = lines[1:]
-
 training_samples, validation_samples = train_test_split(data_lines, test_size=0.2, shuffle = True)
+
 
 def validation_generator (samples, batch_size = 100):
     # used to generate validation data
@@ -129,6 +129,6 @@ model.fit_generator(t_generator,
             validation_steps=ceil(len(validation_samples)/batch_size), 
             epochs=epochs, verbose=1)
 
-model.save('model.h5')
+# model.save('model.h5')
 print('done')
 
