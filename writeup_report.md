@@ -1,5 +1,5 @@
 
-##**Behavioral Cloning Project**
+#Behavioral Cloning Project
 
 The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
@@ -50,7 +50,9 @@ My model architercture is based on the behavioral cloning CNN found here: https:
 
 My model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
 The following image illustrates the model architecture. 
+&nbsp;
 ![alt text][image1]
+&nbsp;
 Every convolution layer includes RELU activation to introduce nonlinearity, and the data is normalized in the model using a Keras lambda layer. The images are also cropped using a Cropping 2D layer. This is done to eliminete irrelevant backround data such as trees and sky pixels.
 
 
@@ -66,7 +68,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually. T
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and  recovering from the left and right sides of the road. For both of these cases images from all three cameras were used (angle correction factor applied in preprocessing). 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and  smooth turning. For both of these cases images from all three cameras were used (with an angle correction factor applied in preprocessing) to enable the model to learn to recover after veering off the center. 
 
 For details about how I created the training data, see the next section. 
 
@@ -76,16 +78,15 @@ For details about how I created the training data, see the next section.
 
 The overall strategy for deriving a model architecture was to start with an architecture that has proven effective for a similar task and modify and tune as needed to increase performance. 
 
-My first step was to use a convolution neural network model similar to the Nvidia behavioral cloning CNN found here: . This model seemed like a great starting point because the task described in the Nvidia paper is almost identical. 
+My first step was to use a convolution neural network model similar to the Nvidia behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/. This model seemed like a great starting point because the goal of the model described in the Nvidia paper is similar to the goal of this project.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had a low mean squared error on both the traning and validation set after minimal training. This was expected because Nvidia has already proven this model's effectivesss. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had a low mean squared error on both the traning and validation set after minimal training. This was expected because this model has proven effective for similar tasks in the past.
 
 Major changes to the model architecture proved unecesssary so none were made.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I augmented the training data by adding:
-A mirror image with a mirrored steering value(negative)
-Left camera image with a correction factor (+0.2)
-Right camera image with a correction factor (-0.2)
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I augmented the training data by adding: A mirror image with a mirrored steering value(negative),
+a eft camera image with a correction factor (+0.2),
+, and a right camera image with a correction factor (-0.2)
 
 At the end of the process, the vehicle was able to drive autonomously around the track without leaving the road.
 
@@ -93,7 +94,7 @@ At the end of the process, the vehicle was able to drive autonomously around the
 
 The final model architecture was based on the Nvidia architecture presented earlier in this writeup. 
 The model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
-The following table produced by Model.summary() illustrates the model architecture. 
+The following table, produced by Model.summary(), illustrates the model architecture. 
 
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -121,8 +122,9 @@ dense_2 (Dense)              (None, 50)                5050
 _________________________________________________________________
 dense_3 (Dense)              (None, 10)                510       
 _________________________________________________________________
-dense_4 (Dense)              (None, 1)                 11        
-=================================================================
+dense_4 (Dense)              (None, 1)                 11      
+_________________________________________________________________
+
 Total params: 981,819
 Trainable params: 981,819
 Non-trainable params: 0
@@ -143,13 +145,13 @@ The data also included left and right camera images with corrected steering valu
 ![alt text][image5]
 
 
-To augment the data set, I also flipped images and angles thinking that this would counteract the data bias that exists because driving clockwise around the track involves only left turns. For example, here is an image that has then been flipped:
+To augment the data set, I also flipped the center camera images and made the corresponding angles negative in order to counteract the data bias that exists because driving clockwise around the track involves only left turns. For example, here is an image that has then been flipped:
 
 ![alt text][image6]
 ![alt text][image7]
 
 
-The sample training data had 8036 number of data points. After augmenting the number of trianing data increased to 32144. I then preprocessed this data by normalizing, mean centering, and cropping the pixel data.
+The sample training data had 8036 data points. After augmentation, the amount of training data increased to 32144. I then preprocessed this data by normalizing, mean centering, and cropping the pixel data.
 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. I implemented generators to efficiently load and preprocess the data.
