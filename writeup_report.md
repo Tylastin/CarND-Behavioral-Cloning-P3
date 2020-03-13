@@ -1,5 +1,5 @@
 
-#Behavioral Cloning Project
+# Behavioral Cloning Project
 
 The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
@@ -50,9 +50,9 @@ My model architercture is based on the behavioral cloning CNN found here: https:
 
 My model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
 The following image illustrates the model architecture. 
-&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
 ![alt text][image1]
-&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
 Every convolution layer includes RELU activation to introduce nonlinearity, and the data is normalized in the model using a Keras lambda layer. The images are also cropped using a Cropping 2D layer. This is done to eliminete irrelevant backround data such as trees and sky pixels.
 
 
@@ -96,8 +96,9 @@ The final model architecture was based on the Nvidia architecture presented earl
 The model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
 The following table, produced by Model.summary(), illustrates the model architecture. 
 
-Layer (type)                 Output Shape              Param #   
-=================================================================
+
+Layer (type)        			Output Shape)       Param #        
+_________________________________________________________________
 input_1 (InputLayer)         (None, 160, 320, 3)       0         
 _________________________________________________________________
 lambda_1 (Lambda)            (None, 160, 320, 3)       0         
@@ -140,8 +141,10 @@ To capture good driving behavior, the data included mostly center-lane driving. 
 
 The data also included left and right camera images with corrected steering values. Using the images from the left and right cameras enabled the vehicle to learn to recover smoothly after falling off the center line. These images show the left, center, and right camera images.
 
-![alt text][image3]
-![alt text][image4]
+![alt text][image3]  
+
+![alt text][image4]  
+
 ![alt text][image5]
 
 
