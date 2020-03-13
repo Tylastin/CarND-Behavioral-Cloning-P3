@@ -49,10 +49,12 @@ The model.py file contains the code for training and saving the convolution neur
 My model architercture is based on the behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/.
 
 My model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
-The following image illustrates the model architecture. 
+The following image illustrates the model architecture.  
+
 &nbsp;&nbsp;&nbsp;&nbsp;
 ![alt text][image1]
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;  
+
 Every convolution layer includes RELU activation to introduce nonlinearity, and the data is normalized in the model using a Keras lambda layer. The images are also cropped using a Cropping 2D layer. This is done to eliminete irrelevant backround data such as trees and sky pixels.
 
 
@@ -159,4 +161,4 @@ The sample training data had 8036 data points. After augmentation, the amount of
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. I implemented generators to efficiently load and preprocess the data.
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 1 as evidenced by the validation loss being the lowest afer the first epoch. I used an adam optimizer so that manually training the learning rate wasn't necessary. 
+I trained the model using the preprocessed training data. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 1 as evidenced by the validation loss being the lowest afer the first epoch. I used an adam optimizer so that manually training the learning rate wasn't necessary. 
