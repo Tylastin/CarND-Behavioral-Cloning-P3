@@ -10,7 +10,7 @@ This deep learning project, implements a convolutional neural network (CNN) base
 
 The included simulator is used to steer a car around a track for data collection. The image data and steering angles are used to train a neural network. The neural network model is used to drive the car autonomously around the track.
 
-A detailed writeup of the the steps taken to complete the project can be found [here](./writeup_report.md) 
+A detailed writeup of the the steps taken to complete the project can be found [here](./writeup_report.md). A demo video of the simulator car driving using the trained CNN can be found [here](./video.mp4).
 
 Main project files: 
 * model.py (script used to create and train the model)
@@ -20,6 +20,8 @@ Main project files:
 * video.mp4 (a video demo of the vehicle driving autonomously around the track)
 
 NVIDIA Model Architecture:
+
+
 ![NVIDIA Model Architecture](./examples/cnn_architecture.png "NVIDIA Model Architecture")
 
 
