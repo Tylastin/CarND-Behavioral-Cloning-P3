@@ -46,31 +46,34 @@ The model.py file contains the code for training and saving the convolution neur
 ### Model Architecture and Training Strategy
 
 #### 1. An appropriate model architecture has been employed
-My model architercture is based on the behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/.
+My model architecture is based on the behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/.
 
-My model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
+My model consists of a convolution neural network with three 5x5 convolutions, two 3x3 convolutions, one flatten layer, and 3 fully connected layers.
 The following image illustrates the model architecture.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 ![alt text][image1]
 &nbsp;&nbsp;&nbsp;&nbsp;  
-
-Every convolution layer includes RELU activation to introduce nonlinearity, and the data is normalized in the model using a Keras lambda layer. The images are also cropped using a Cropping 2D layer. This is done to eliminete irrelevant backround data such as trees and sky pixels.
+Note:
+* Every convolution layer includes RELU activation to introduce nonlinearity.
+* Normalization is accomplished using a Keras lambda layer. 
+* The images cropped using a Cropping 2D layer. This is done to eliminete irrelevant backround data such as trees and sky pixels.
 
 
 
 #### 2. Attempts to reduce overfitting in the model
 
-
-The model was trained and validated on different data sets to ensure that the model was not overfitting. Furhtermore only 1 epoch was used to reduce the chance of overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+* The model was trained and validated on different data sets
+* Only 1 epoch was used
+* The model was tested in the simulator, which ensured that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually. The adam optimizer was able to produce minimal validation error on the first epoch. 
+The model was trained using an adam optimizer, so the learning rate was not tuned manually. The adam optimizer was able to produce minimal validation error on the first epoch. 
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and  smooth turning. For both of these cases images from all three cameras were used (with an angle correction factor applied in preprocessing) to enable the model to learn to recover after veering off the center. 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and  smooth turning. For both of these cases images from all three cameras were used (with an angle correction factor applied in preprocessing). Using the lateral camera images enable the model to learn to recover after veering off the center. 
 
 For details about how I created the training data, see the next section. 
 
@@ -78,25 +81,26 @@ For details about how I created the training data, see the next section.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to start with an architecture that has proven effective for a similar task and modify and tune as needed to increase performance. 
+The overall strategy for solving the problem was to start with an architecture that has proven effective for a similar task, and then modifying and tuning the model to increase performance. 
 
-My first step was to use a convolution neural network model similar to the Nvidia behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/. This model seemed like a great starting point because the goal of the model described in the Nvidia paper is similar to the goal of this project.
+My first step was to use a convolution neural network model similar to the NVIDIA behavioral cloning CNN found here: https://devblogs.nvidia.com/deep-learning-self-driving-cars/. This model seemed like a great starting point because the goal of NVIDIA model is similar to the goal of this project.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had a low mean squared error on both the traning and validation set after minimal training. This was expected because this model has proven effective for similar tasks in the past.
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that the model had a low mean squared error on both the traning and validation set after minimal training. This was expected because this model architecture has proven effective for similar tasks.
 
-Major changes to the model architecture proved unecesssary so none were made.
+The model satsfied the project requirements so no major modifications to the architecture were made.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I augmented the training data by adding: A mirror image with a mirrored steering value(negative),
-a eft camera image with a correction factor (+0.2),
-, and a right camera image with a correction factor (-0.2)
+The model's performance was tested in the simulator, which showed how the car would operate. Initially, there were a few spots where the vehicle fell off the track. To improve the driving behavior in these cases, I augmented the training data by adding: 
+* Mirror Images with a mirrored (negative) steering value
+* Left camera images with a correction factor (+0.2)
+* Right camera images with a correction factor (-0.2)
 
-At the end of the process, the vehicle was able to drive autonomously around the track without leaving the road.
+After training the model on the augmented data set, the vehicle was able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
 The final model architecture was based on the Nvidia architecture presented earlier in this writeup. 
-The model consists of a convolution neural network with 3 5x5 convolutions, 2 3x3 convolutions, a flatten layer, and 3 fully connected layers.
-The following table, produced by Model.summary(), illustrates the model architecture. 
+The model consists of a convolution neural network with three 5x5 convolutions, two 3x3 convolutions, one flatten layer, and three fully-connected layers.
+The following table, produced by the Model.summary() function, illustrates the model architecture. 
 
 
 Layer (type)        			Output Shape)       Param #        
@@ -150,15 +154,16 @@ The data also included left and right camera images with corrected steering valu
 ![alt text][image5]
 
 
-To augment the data set, I also flipped the center camera images and made the corresponding angles negative in order to counteract the data bias that exists because driving clockwise around the track involves only left turns. For example, here is an image that has then been flipped:
+To augment the data set, center camera images were flipped and the steering values were muliplied by -1. This augmentation counteracts the data bias towards left turns that comes from driving clockwise around the track. Here is an example of a flipped image:
 
 ![alt text][image6]
 ![alt text][image7]
 
-
-The sample training data had 8036 data points. After augmentation, the amount of training data increased to 32144. I then preprocessed this data by normalizing, mean centering, and cropping the pixel data.
-
-
-I finally randomly shuffled the data set and put 20% of the data into a validation set. I implemented generators to efficiently load and preprocess the data.
-
-I trained the model using the preprocessed training data. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 1 as evidenced by the validation loss being the lowest afer the first epoch. I used an adam optimizer so that manually training the learning rate wasn't necessary. 
+Training Summary:
+1. The sample training data had 8036 data points. 
+2. After augmentation, the amount of training data increased to 32144. 
+3. I preprocessed this data by normalizing, mean centering, and cropping the pixel data.
+4. I randomly shuffled the data set and put 20% of the data into a validation set.
+5. I implemented generators to efficiently load and preprocess the data.
+6. I trained the model using the preprocessed training data. The validation set helped determine if the model was over or under fitting. 
+7. The ideal number of epochs was 1 as evidenced by the validation loss being the lowest afer the first epoch. I used an adam optimizer so that manually training the learning rate wasn't necessary. 
